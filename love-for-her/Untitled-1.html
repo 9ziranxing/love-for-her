@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给最爱的姐姐</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff5f5;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffe8e8 0%, #fff5f5 100%);
+        }
+        .container {
+            max-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .centered-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .image-frame {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.3);
+            border: 3px solid #ff9eb5;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .btn-custom {
+            background: linear-gradient(45deg, #ff9eb5, #ff6b8b);
+            border: none;
+            color: white;
+            border-radius: 50px;
+            padding: 12px 35px;
+            margin: 10px;
+            font-size: 16px;
+            min-width: 100px;
+            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+        }
+        .btn-single {
+            min-width: 150px;
+            background: linear-gradient(45deg, #6bff8b, #4cd964);
+        }
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #fff8f8 100%);
+        }
+        .modal-header {
+            border-bottom: 2px solid #ffe8e8;
+            justify-content: center;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+        }
+        .modal-title {
+            color: #ff6b8b;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .modal-body {
+            padding: 25px;
+            font-size: 17px;
+            color: #666;
+            text-align: center;
+        }
+        .text-content {
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #555;
+            background: linear-gradient(135deg, #ffffff 0%, #fff8f8 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 2px solid #ffe8e8;
+        }
+        .top-left-text {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            color: #ff6b8b;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffffff 0%, #fff8f8 100%);
+            padding: 12px 18px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #ffe8e8;
+            z-index: 100;
+        }
+        video {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            margin-top: 70px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid #ffe8e8;
+        }
+        .final-text {
+            font-size: 18px;
+            color: #ff6b8b;
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffffff 0%, #fff8f8 100%);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #ffe8e8;
+            line-height: 1.6;
+        }
+        #image3-container {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #image3-container:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 30px rgba(255, 107, 139, 0.4);
+        }
+        .click-hint {
+            color: #ff6b8b;
+            font-style: italic;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+        .final-message {
+            font-size: 20px;
+            color: #4cd964;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0fff4 0%, #e8ffe8 100%);
+            border-radius: 15px;
+            border: 2px solid #c0f0c0;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .fallback-image {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 第一阶段 -->
+        <div id="stage1" class="centered-content">
+            <div class="image-frame">
+                <img id="image1" src="images/image1.jpg" alt="可爱小狗" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23ffe8e8%22/><text x=%2250%25%22 y=%2250%25%22 font-size=%2220%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ff6b8b%22>可爱小狗</text></svg>'">
+            </div>
+        </div>
+
+        <!-- 第二阶段 -->
+        <div id="stage2" class="centered-content" style="display: none;">
+            <div class="image-frame">
+                <img id="image2" src="images/image2.jpg" alt="小狗表情" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23ffe8e8%22/><text x=%2250%25%22 y=%2250%25%22 font-size=%2220%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ff6b8b%22>小狗表情</text></svg>'">
+            </div>
+            <div class="text-content">
+                🐶 小狗会急，会生气，会不解风情，会不知道该说什么话<br>
+                💖 但是小狗永远爱姐姐，一直陪在姐姐身边
+            </div>
+            <div class="image-frame" style="width: 180px; height: 180px;" id="image3-container">
+                <img id="image3" src="images/image3.jpg" alt="点击继续" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23ffe8e8%22/><text x=%2250%25%22 y=%2250%25%22 font-size=%2216%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ff6b8b%22>点击继续</text></svg>'">
+            </div>
+            <p class="click-hint">👇 点击小狗继续</p >
+        </div>
+
+        <!-- 第三阶段 -->
+               <div id="stage3" style="display: none; padding: 20px; text-align: center;">
+            <div class="top-left-text" id="changing-text">小狗想邀请你一起去海边</div>
+            <video id="video1" controls style="display: none;">
+                <source src="videos/beach-video.mp4" type="video/mp4">
+                您的浏览器不支持视频播放
+            </video>
+            <video id="video2" controls style="display: none;">
+                <source src="videos/fireworks-video.mp4" type="video/mp4">
+                您的浏览器不支持视频播放
+            </video>
+            
+            <div id="final-message" style="display: none;">
+                <div class="final-text">
+                    💕 小狗会永远陪着姐姐，直到姐姐真真正正的讨厌小狗，让小狗永远都不要再出现
+                </div>
+                <div class="image-frame" style="width: 200px; height: 200px; margin: 20px auto;">
+                    <img id="image4" src="images/image4.jpg" alt="最后图片" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23ffe8e8%22/><text x=%2250%25%22 y=%2250%25%22 font-size=%2214%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ff6b8b%22>最后图片</text></svg>'">
+                </div>
+            </div>
+
+            <!-- 最终确认消息 -->
+            <div id="final-confirmation" class="final-message" style="display: none;">
+                赵睿轩是跟在冯岚后面跑的小狗 🐕💨
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="dialogModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">讨厌小狗吗</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <p id="modalMessage">选择你的回答</p >
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-custom" id="yesBtn">Yes</button>
+                    <button type="button" class="btn btn-custom" id="noBtn">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 最终弹框 -->
+    <div class="modal fade" id="finalDialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">可以原谅小狗了吗？</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <p>原谅的话微信告诉小狗几点下班吧！小狗给姐姐点爱吃的水果！！！</p >
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-custom btn-single" id="finalYesBtn">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 初始化模态框
+        const dialogModal = new bootstrap.Modal(document.getElementById('dialogModal'));
+        const finalDialog = new bootstrap.Modal(document.getElementById('finalDialog'));
+        
+        // 显示初始弹窗
+        window.onload = function() {
+            setTimeout(function() {
+                showDialog("讨厌小狗吗", "选择你的回答");
+            }, 1000);
+        };
+        
+        // 显示弹窗函数
+        function showDialog(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            dialogModal.show();
+        }
+        
+        // Yes按钮事件
+        document.getElementById('yesBtn').onclick = function() {
+            dialogModal.hide();
+            setTimeout(function() {
+                showDialog("讨厌小狗吗", "选择你的回答");
+            }, 500);
+        };
+        
+        // No按钮事件 - 进入第二阶段
+        document.getElementById('noBtn').onclick = function() {
+            dialogModal.hide();
+            document.getElementById('stage1').style.display = 'none';
+            document.getElementById('stage2').style.display = 'block';
+        };
+        
+        // 点击图片3进入第三阶段
+        document.getElementById('image3-container').onclick = function() {
+            document.getElementById('stage2').style.display = 'none';
+            document.getElementById('stage3').style.display = 'block';
+            
+            // 显示第一个视频（使用占位内容）
+            document.getElementById('video1').style.display = 'block';
+            
+            // 10秒后切换到第二个视频
+            setTimeout(function() {
+                document.getElementById('changing-text').textContent = "🎆 小狗想请你看烟花";
+                document.getElementById('video1').style.display = 'none';
+                document.getElementById('video2').style.display = 'block';
+                
+                // 10秒后显示最终消息
+                setTimeout(function() {
+                    document.getElementById('video2').style.display = 'none';
+                    document.getElementById('final-message').style.display = 'block';
+                    
+                    // 10秒后显示最终弹窗
+                    setTimeout(function() {
+                        finalDialog.show();
+                    }, 10000);
+                }, 10000);
+            }, 10000);
+        };
+        
+        // 最终Yes按钮事件
+        document.getElementById('finalYesBtn').onclick = function() {
+            finalDialog.hide();
+            document.getElementById('final-confirmation').style.display = 'block';
+        };
+        
+        // 重新加载视频当模态框关闭时
+        document.getElementById('dialogModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('video1').load();
+            document.getElementById('video2').load();
+        });
+    </script>
+</body>
+</html>
